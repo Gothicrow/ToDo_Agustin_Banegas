@@ -1,19 +1,19 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Button2 from './Button2'
+import Button1 from './Button1'
 import { colors } from '../Global/colors'
+import Button3 from './Button3'
 
-const Header = ({text}) => {
+const Filters = ({text}) => {
   return (
     <View style={styles.container}>
-      <Button2 icon={"home"} />
-      <Text style={styles.title}>{text}</Text>
-      <Button2 icon={"gear"} />
+      <Button3 text={"Agregar"} icon={"plus"} />
+      <Button3 text={"Filtrar"} icon={"filter"} />
     </View>
   )
 }
 
-export default Header
+export default Filters
 
 const styles = StyleSheet.create({
   container: {

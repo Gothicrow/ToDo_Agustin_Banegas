@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    color: colors.blue.color1
+    fontWeight: "bold",
+    color: colors["blue"].color1
   },
   subtitle: {
-    color: colors.blue.color1
+    color: colors["blue"].color1
   }
 })
