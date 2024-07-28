@@ -1,6 +1,6 @@
 
 
-export const colors = {
+export const palettes = {
     blue: {
         color1: "#176B87",
         color2: "#86B6F6",

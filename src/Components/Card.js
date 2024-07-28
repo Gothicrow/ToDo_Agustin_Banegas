@@ -1,20 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Button1 from './Button1'
-import { colors } from '../Global/colors'
+import { palettes } from '../Global/palettes'
 
-const Card = () => {
+const Card = ({ navigation, t }) => {
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <View style={styles.viewUp}>
-          <Text style={styles.title}>Crear una card para el inicio</Text>
-          <Button1 text={"Ver"} />
+          <Text style={styles.title}>{t.title}</Text>
+          <Button1 text={"Ver"} action={() => { navigation.navigate("Details", { idProduct: t.id }) }} />
         </View>
         <View style={styles.viewDown}>
-          <Text style={styles.descripcion}>Aca es donde va la descripcion de la tarea a realizar.</Text>
+          <Text style={styles.descripcion}>{t.description}</Text>
           <View style={styles.adjuntos}>
-            <Text style={styles.adjuntosText}>20 adjuntos</Text>
+            <Text style={styles.adjuntosText}>{t.date}</Text>
+            <Text style={styles.adjuntosText}>{t.time}hs</Text>
           </View>
         </View>
       </View>
@@ -39,8 +41,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 12,
-    backgroundColor: colors["blue"].color4,
-    borderColor: colors["blue"].color1,
+    backgroundColor: palettes["blue"].color4,
+    borderColor: palettes["blue"].color1,
   },
   viewUp: {
     flexDirection: "row",
@@ -59,19 +61,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     width: 230,
-    color: colors["blue"].color1
+    color: palettes["blue"].color1
   },
   descripcion: {
     fontSize: 14,
     width: 210,
-    color: colors["blue"].color2
+    color: palettes["blue"].color2
   },
   adjuntos: {
     height: "70%",
+    flexDirection: "column",
+    alignItems: "center",
     justifyContent: "flex-end",
   },
   adjuntosText: {
     fontSize: 14,
-    color: colors["blue"].color2
+    color: palettes["blue"].color2
   }
 })

@@ -1,14 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Button1 from './Button1'
-import { colors } from '../Global/colors'
+import { palettes } from '../Global/palettes'
 import Button3 from './Button3'
 
-const Filters = ({text}) => {
+const Filters = ({text, navigation}) => {
   return (
     <View style={styles.container}>
-      <Button3 text={"Agregar"} icon={"plus"} />
-      <Button3 text={"Filtrar"} icon={"filter"} />
+      <Button3 text={"Agregar"} icon={"plus"} action={()=>navigation.navigate("Form")} />
+      <Button3 text={"Filtrar"} icon={"filter"} action={()=>false} />
     </View>
   )
 }
@@ -25,11 +24,11 @@ const styles = StyleSheet.create({
     height: 60,
     width: "100%",
     borderBottomWidth: 1,
-    borderBottomColor: colors["blue"].color3
+    borderBottomColor: palettes["blue"].color3
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: colors["blue"].color1
+    color: palettes["blue"].color1
   }
 })

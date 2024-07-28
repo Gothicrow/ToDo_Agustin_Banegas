@@ -1,12 +1,12 @@
 import { FlatList, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import Header from '../Components/Header'
-import { colors } from '../Global/colors'
+import { palettes } from '../Global/palettes'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Button1 from '../Components/Button1';
 import * as ImagePicker from 'expo-image-picker';
 
-const Form = () => {
+const Form = ({navigation, route}) => {
 
     const [title, setTitle] = useState("")
     const [date, setDate] = useState(new Date());
@@ -54,7 +54,7 @@ const Form = () => {
 
     return (
         <View style={styles.container}>
-            <Header text={"Formulario"} />
+            <Header text={"Formulario"} navigation={navigation} route={route} />
             <View style={styles.formContainer}>
                 <Text style={styles.label}>Titulo:</Text>
                 <TextInput
@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         width: "100%",
-        marginBottom: 15
+        marginBottom: 15,
+        backgroundColor: palettes["blue"].color4
     },
     formContainer: {
         width: "85%",
@@ -121,14 +122,14 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 18,
-        color: colors["blue"].color1
+        color: palettes["blue"].color1
     },
     inputText: {
         padding: 5,
         backgroundColor: "white",
         borderWidth: 1,
         borderRadius: 3,
-        borderColor: colors["blue"].color1,
+        borderColor: palettes["blue"].color1,
         color: "black"
     },
     flatlist: {

@@ -1,16 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Button1 from '../Components/Button1'
-import { colors } from '../Global/colors'
+import { palettes } from '../Global/palettes'
 
-const Landing = () => {
+const Landing = ({navigation}) => {
+  
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.title} >App ToDo</Text>
         <Text style={styles.subtitle} >Agustin Banegas</Text>
       </View>
-      <Button1 text="Iniciar" />
+      <Button1 text="Iniciar" action={()=>navigation.navigate("Home")} />
     </View>
   )
 }
@@ -22,7 +23,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 160
+    gap: 160,
+    backgroundColor: palettes["blue"].color4
   },
   titleContainer: {
     alignItems: "center",
@@ -31,9 +33,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: colors["blue"].color1
+    color: palettes["blue"].color1
   },
   subtitle: {
-    color: colors["blue"].color1
+    color: palettes["blue"].color1
   }
 })

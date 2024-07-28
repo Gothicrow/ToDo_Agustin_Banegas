@@ -1,16 +1,17 @@
 import { Button, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import React from 'react'
-import { colors } from '../Global/colors'
+import { palettes } from '../Global/palettes'
 
-const SelectorOptions = ({ text, action }) => {
+const Button1 = ({ text, action }) => {
+
   return (
-    <TouchableHighlight onPress={() => false} style={styles.touchable} underlayColor={colors["blue"].color2}>
+    <TouchableHighlight onPress={() => action()} style={styles.touchable} underlayColor={palettes["blue"].color2}>
       <Text style={styles.text}>{text}</Text>
     </TouchableHighlight>
   )
 }
 
-export default SelectorOptions
+export default Button1 
 
 const styles = StyleSheet.create({
   touchable: {
@@ -18,12 +19,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 12,
-    backgroundColor: colors["blue"].color4,
-    borderColor: colors["blue"].color1,
+    backgroundColor: palettes["blue"].color3,
+    borderColor: palettes["blue"].color1,
   },
   text: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
-    color: colors["blue"].color1
+    color: palettes["blue"].color1
   }
 })

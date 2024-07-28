@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import React from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { colors } from '../Global/colors';
+import { palettes } from '../Global/palettes';
 
 const Button3 = ({ text, icon, action }) => {
     return (
-        <TouchableHighlight onPress={() => false} style={styles.touchable} underlayColor={colors["blue"].color2}>
+        <TouchableHighlight onPress={() => action()} style={styles.touchable} underlayColor={palettes["blue"].color2}>
             <View style={styles.container}>
                 <Text style={styles.text}>{text}</Text>
                 <FontAwesome name={icon} style={styles.icon} />
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 5,
         paddingHorizontal: 12,
-        backgroundColor: colors["blue"].color3,
-        borderColor: colors["blue"].color1,
+        backgroundColor: palettes["blue"].color3,
+        borderColor: palettes["blue"].color1,
     },
     container: {
         flexDirection: "row",
@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 18,
         fontWeight: "bold",
-        color: colors["blue"].color1
+        color: palettes["blue"].color1
     },
     icon: {
         fontSize: 22,
-        color: colors["blue"].color1
+        color: palettes["blue"].color1
     }
 })

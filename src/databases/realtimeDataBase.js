@@ -1,0 +1,1 @@
+export const baseUrl = "https://todoapp-aeb-default-rtdb.firebaseio.com/"
