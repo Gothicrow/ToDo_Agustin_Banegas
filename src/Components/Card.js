@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Button1 from './Button1'
-import { palettes } from '../Global/palettes'
+import { colors } from '../Global/colors'
 
 const Card = ({ navigation, t }) => {
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     width: "100%",
-    marginVertical: 5
+    marginTop: 10
   },
   card: {
     alignItems: "center",
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 12,
-    backgroundColor: palettes["blue"].color4,
-    borderColor: palettes["blue"].color1,
+    backgroundColor: colors.color4,
+    borderColor: colors.color1,
   },
   viewUp: {
     flexDirection: "row",
@@ -61,12 +61,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     width: 230,
-    color: palettes["blue"].color1
+    color: colors.color1
   },
   descripcion: {
     fontSize: 14,
     width: 210,
-    color: palettes["blue"].color2
+    color: colors.color2
   },
   adjuntos: {
     height: "70%",
@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
   },
   adjuntosText: {
     fontSize: 14,
-    color: palettes["blue"].color2
+    color: colors.color2
   }
 })

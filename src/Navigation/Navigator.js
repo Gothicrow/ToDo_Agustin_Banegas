@@ -6,39 +6,24 @@ import Landing from '../Screens/Landing'
 import Home from '../Screens/Home'
 import Form from '../Screens/Form'
 import Details from '../Screens/Details'
+import Login from '../Screens/Login'
+import Register from '../Screens/Register'
+import AuthStack from './AuthStack'
+import ToDoStack from './ToDoStack'
+import { useSelector } from 'react-redux'
 
 const Stack = createNativeStackNavigator()
 
 const Navigator = () => {
+    const user = useSelector(state => state.usersSlice.value.user)
     return (
         <NavigationContainer>
-            <Stack.Navigator
-                initialRouteName='Landing'
-                screenOptions={
-                    ({ route }) => (
-                        {
-                            header: () => null
-                        }
-                    )
-                }
-            >
-                <Stack.Screen
-                    name="Landing"
-                    component={Landing}
-                />
-                <Stack.Screen
-                    name="Home"
-                    component={Home}
-                />
-                <Stack.Screen
-                    name="Details"
-                    component={Details}
-                />
-                <Stack.Screen
-                    name="Form"
-                    component={Form}
-                />
-            </Stack.Navigator>
+            {
+                user ?
+                    <ToDoStack />
+                    :
+                    <AuthStack />
+            }
         </NavigationContainer>
     )
 }

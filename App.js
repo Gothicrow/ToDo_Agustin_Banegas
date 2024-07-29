@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { palettes } from './src/Global/palettes';
+import { colors } from './src/Global/colors';
 import Navigator from './src/Navigation/Navigator';
 import { Provider } from 'react-redux';
 import Store from './Redux/Store';
@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     alignItems: "center",
-    backgroundColor: palettes["blue"].color4
+    backgroundColor: colors.color4
   },
 });

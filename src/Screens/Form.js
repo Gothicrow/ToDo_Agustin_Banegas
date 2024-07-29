@@ -1,7 +1,7 @@
 import { FlatList, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import Header from '../Components/Header'
-import { palettes } from '../Global/palettes'
+import { colors } from '../Global/colors'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Button1 from '../Components/Button1';
 import * as ImagePicker from 'expo-image-picker';
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: "100%",
         marginBottom: 15,
-        backgroundColor: palettes["blue"].color4
+        backgroundColor: colors.color4
     },
     formContainer: {
         width: "85%",
@@ -122,14 +122,14 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 18,
-        color: palettes["blue"].color1
+        color: colors.color1
     },
     inputText: {
         padding: 5,
         backgroundColor: "white",
         borderWidth: 1,
         borderRadius: 3,
-        borderColor: palettes["blue"].color1,
+        borderColor: colors.color1,
         color: "black"
     },
     flatlist: {

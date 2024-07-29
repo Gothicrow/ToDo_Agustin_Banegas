@@ -17,8 +17,9 @@ export const taskSlice = createSlice({
         updateTask: (state, newTask) => {
             state.task = newTask
         },
-        updateTasksArray: (state, newArray) => {
-            state.tasks = newArray
+        updateTasksArray: (state, { payload }) => {
+            console.log(payload.newArray)
+            state.tasks = payload.newArray
         }
     }
 })

@@ -1,7 +1,7 @@
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import Header from '../Components/Header'
-import { palettes } from '../Global/palettes'
+import { colors } from '../Global/colors'
 import { useGetTaskByIdQuery } from '../services/taskService'
 
 const Details = ({ navigation, route }) => {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     width: "100%",
-    backgroundColor: palettes["blue"].color4
+    backgroundColor: colors.color4
   },
   detailsContainer: {
     width: "85%",
@@ -57,20 +57,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: palettes["blue"].color1
+    color: colors.color1
   },
   date: {
     fontSize: 18,
-    color: palettes["blue"].color3
+    color: colors.color3
   },
   description: {
     fontSize: 22,
-    color: palettes["blue"].color2
+    color: colors.color2
   },
   archive: {
     fontSize: 18,
-    color: palettes["blue"].color1,
+    color: colors.color1,
     borderBottomWidth: 1,
-    borderBottomColor: palettes["blue"].color3
+    borderBottomColor: colors.color3
   },
 })

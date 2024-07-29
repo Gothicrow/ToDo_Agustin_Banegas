@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Button2 from './Button2'
-import { palettes } from '../Global/palettes'
+import { colors } from '../Global/colors'
 
 const Header = ({text, navigation, route}) => {
   return (
@@ -25,12 +25,12 @@ const styles = StyleSheet.create({
     height: 60,
     width: "100%",
     borderBottomWidth: 1,
-    borderBottomColor: palettes["blue"].color3,
+    borderBottomColor: colors.color3,
     marginTop: 25
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: palettes["blue"].color1
+    color: colors.color1
   }
 })

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Button1 from '../Components/Button1'
-import { palettes } from '../Global/palettes'
+import { colors } from '../Global/colors'
 
 const Landing = ({navigation}) => {
   
@@ -11,7 +11,7 @@ const Landing = ({navigation}) => {
         <Text style={styles.title} >App ToDo</Text>
         <Text style={styles.subtitle} >Agustin Banegas</Text>
       </View>
-      <Button1 text="Iniciar" action={()=>navigation.navigate("Home")} />
+      <Button1 text="Iniciar" action={()=>navigation.navigate("Login")} />
     </View>
   )
 }
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 160,
-    backgroundColor: palettes["blue"].color4
+    backgroundColor: colors.color4
   },
   titleContainer: {
     alignItems: "center",
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: palettes["blue"].color1
+    color: colors.color1
   },
   subtitle: {
-    color: palettes["blue"].color1
+    color: colors.color1
   }
 })
