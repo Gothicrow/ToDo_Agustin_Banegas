@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateTask, updateTasksArray } from '../../Redux/features/cardSlice';
 
 const Form = ({ navigation, route }) => {
-
-    const { data } = useGetTaskByIdQuery(route.params.idProduct)
+    
+    const { refetch, data } = useGetTaskByIdQuery(route.params.idProduct)
 
     const nowDate = new Date().toISOString().split("T")[0].split("-")
     const nowTime = new Date().toISOString().split("T")[1].slice(0, 5)
@@ -21,6 +21,7 @@ const Form = ({ navigation, route }) => {
     const dispatch = useDispatch()
 
     const [id, setId] = useState(0)
+    const [name, setName] = useState("")
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [date, setDate] = useState(`${nowDate[2]}/${nowDate[1]}/${nowDate[0]}`);
@@ -32,6 +33,7 @@ const Form = ({ navigation, route }) => {
     useEffect(() => {
         if (data) {
             setId(data.id)
+            setName(data.name)
             setTitle(data.title)
             setDescription(data.description)
             setDate(data.date)
@@ -39,6 +41,12 @@ const Form = ({ navigation, route }) => {
             setImage(data.image)
         }
     }, [data])
+
+    useEffect(()=>{
+        if(route.params.idProduct){
+            refetch()
+        }
+    },[route.params.idProduct])
 
     useEffect(() => {
         if (resultPost.isSuccess) {
@@ -49,7 +57,7 @@ const Form = ({ navigation, route }) => {
 
     useEffect(() => {
         if (resultPut.isSuccess) {
-            dispatch(updateTask({ task: null }))
+            dispatch(updateTask({ task: resultPut.data }))
             navigation.navigate("Details", { idProduct: id })
         }
     }, [resultPut])
@@ -65,12 +73,12 @@ const Form = ({ navigation, route }) => {
 
     const onChangeTime = (event, selectedDate) => {
         const currentDate = selectedDate.toISOString().split("T")[1].slice(0, 5).split(":");
-        if(parseInt(currentDate[0])>2){
-            currentDate[0] = parseInt(currentDate[0])-3
-        }else{
-            currentDate[0] = parseInt(currentDate[0])+21
+        if (parseInt(currentDate[0]) > 2) {
+            currentDate[0] = parseInt(currentDate[0]) - 3
+        } else {
+            currentDate[0] = parseInt(currentDate[0]) + 21
         }
-        if(currentDate[0]<10){
+        if (currentDate[0] < 10) {
             currentDate[0] = "0" + currentDate[0].toString()
         }
         setShowTime(false)
@@ -105,16 +113,17 @@ const Form = ({ navigation, route }) => {
 
     const onSubmit = () => {
         if (title != "") {
-            if(data){
+            if (data) {
                 triggerPut({
                     id,
+                    name,
                     title,
                     description,
                     date,
                     time,
                     image
                 })
-            }else{
+            } else {
                 const newId = parseInt((Math.random() * 1000000).toString().split('.')[0])
                 setId(newId)
                 triggerPost({
@@ -133,7 +142,7 @@ const Form = ({ navigation, route }) => {
         <ScrollView style={styles.container}>
             <Header text={"Formulario"} navigation={navigation} route={route} onSubmitForm={onSubmit} />
             <View style={styles.formContainer}>
-                <Text style={styles.label}>{`${title}`/* Titulo: */}</Text>
+                <Text style={styles.label}>Titulo:</Text>
                 <TextInput
                     style={styles.inputText}
                     value={title}

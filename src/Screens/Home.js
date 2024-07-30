@@ -9,19 +9,19 @@ import { updateTasksArray } from '../../Redux/features/cardSlice.js'
 
 const Home = ({ navigation, route }) => {
 
-  const { data } = useGetTasksQuery()
+  const { refetch, data } = useGetTasksQuery()
   const dispatch = useDispatch()
   const tasks = useSelector(state => state.cardSlice.tasks)
 
-  useEffect(()=>{
-    if(data){
-      dispatch(updateTasksArray({newArray: data}))
+  useEffect(() => {
+    if (data) {
+      dispatch(updateTasksArray({ newArray: data }))
     }
-  },[data])
-
+  }, [data])
+  
   return (
     <ScrollView style={styles.container}>
-      <Header text="Tareas" navigation={navigation} route={route} />
+      <Header text="Tareas" navigation={navigation} route={route} fn={refetch} />
       {
         tasks.map(t => (
           <Card key={`${Math.random() + tasks.indexOf(t)}`} navigation={navigation} t={t} />

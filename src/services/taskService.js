@@ -14,21 +14,25 @@ export const taskApi = createApi({
             query: (idProduct) => `tasks.json?orderBy="id"&equalTo=${idProduct}`,
             transformResponse: (res) => {
                 const transformedResponse = Object.values(res)
+                if (transformedResponse.length) {
+                    transformedResponse[0].name = Object.keys(res)[0]
+                }
                 if (transformedResponse.length) return transformedResponse[0]
             }
         }),
         postTask: builder.mutation({
             query: ({ ...task }) => ({
-                url: `tasks.json`,
+                url: `tasks/.json`,
                 method: "POST",
                 body: task
             })
         }),
         updateTask: builder.mutation({
-            query: ({ ...task }) => ({
-                url: `tasks.json/${task.id}`,
+            query: ({ name, ...task }) => ({
+                url: `tasks/${name}.json`,
                 method: "PUT",
-                body: task
+                mode: "cors",
+                body: task,
             })
         })
     })

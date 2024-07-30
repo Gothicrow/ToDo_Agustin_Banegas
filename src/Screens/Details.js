@@ -8,15 +8,16 @@ import { updateTask } from '../../Redux/features/cardSlice'
 
 const Details = ({ navigation, route }) => {
 
-  const { data } = useGetTaskByIdQuery(route.params.idProduct)
+  const { refetch, data } = useGetTaskByIdQuery(route.params.idProduct)
   const dispatch = useDispatch()
   const task = useSelector(state => state.cardSlice.task)
 
-  useEffect(()=>{
-    if(data){
-      dispatch(updateTask({task: data}))
+  useEffect(() => {
+    if (data) {
+      refetch()
+      dispatch(updateTask({ task: data }))
     }
-  },[data])
+  }, [data])
 
   return (
     <View style={styles.container}>
@@ -82,9 +83,9 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   image: {
-      flex: 1,
-      width: 200,
-      height: 400,
-      resizeMode: 'contain'
+    flex: 1,
+    width: 200,
+    height: 400,
+    resizeMode: 'contain'
   }
 })
