@@ -24,7 +24,7 @@ const Home = ({ navigation, route }) => {
       <Header text="Tareas" navigation={navigation} route={route} />
       {
         tasks.map(t => (
-          <Card key={`${Math.random() + data.indexOf(t)}`} navigation={navigation} t={t} />
+          <Card key={`${Math.random() + tasks.indexOf(t)}`} navigation={navigation} t={t} />
         ))
       }
     </ScrollView>

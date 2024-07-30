@@ -26,7 +26,6 @@ const Login = ({ navigation }) => {
     }, [result])
 
     const onSubmit = () => {
-        console.log(email,password)
         triggerLogin({
             email,
             password

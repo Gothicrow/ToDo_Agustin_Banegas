@@ -1,30 +1,81 @@
-import { FlatList, Image, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
+import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Header from '../Components/Header'
 import { colors } from '../Global/colors'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Button1 from '../Components/Button1';
 import * as ImagePicker from 'expo-image-picker';
+import { useGetTaskByIdQuery, usePostTaskMutation, useUpdateTaskMutation } from '../services/taskService';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateTask, updateTasksArray } from '../../Redux/features/cardSlice';
 
-const Form = ({navigation, route}) => {
+const Form = ({ navigation, route }) => {
 
+    const { data } = useGetTaskByIdQuery(route.params.idProduct)
+
+    const nowDate = new Date().toISOString().split("T")[0].split("-")
+    const nowTime = new Date().toISOString().split("T")[1].slice(0, 5)
+
+    const [triggerPost, resultPost] = usePostTaskMutation()
+    const [triggerPut, resultPut] = useUpdateTaskMutation()
+    const dispatch = useDispatch()
+
+    const [id, setId] = useState(0)
     const [title, setTitle] = useState("")
-    const [date, setDate] = useState(new Date());
-    const [time, setTime] = useState(new Date());
+    const [description, setDescription] = useState("")
+    const [date, setDate] = useState(`${nowDate[2]}/${nowDate[1]}/${nowDate[0]}`);
+    const [time, setTime] = useState(nowTime);
+    const [image, setImage] = useState("")
     const [showDate, setShowDate] = useState(false);
     const [showTime, setShowTime] = useState(false);
-    const [description, setDescription] = useState("")
-    const [image, setImage] = useState("")
 
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        setShowDate(false)
-        setShowTime(false)
-        if (date) {
-            setDate(currentDate);
+    useEffect(() => {
+        if (data) {
+            setId(data.id)
+            setTitle(data.title)
+            setDescription(data.description)
+            setDate(data.date)
+            setTime(data.time)
+            setImage(data.image)
         }
+    }, [data])
+
+    useEffect(() => {
+        if (resultPost.isSuccess) {
+            dispatch(updateTask({ task: null }))
+            navigation.navigate("Details", { idProduct: id })
+        }
+    }, [resultPost])
+
+    useEffect(() => {
+        if (resultPut.isSuccess) {
+            dispatch(updateTask({ task: null }))
+            navigation.navigate("Details", { idProduct: id })
+        }
+    }, [resultPut])
+
+    const onChangeDate = (event, selectedDate) => {
+        const currentDate = selectedDate.toISOString().split("T");
+        setShowDate(false)
+        if (date) {
+            const newDate = currentDate[0].split("-")
+            setDate(`${newDate[2]}/${newDate[1]}/${newDate[0]}`);
+        }
+    };
+
+    const onChangeTime = (event, selectedDate) => {
+        const currentDate = selectedDate.toISOString().split("T")[1].slice(0, 5).split(":");
+        if(parseInt(currentDate[0])>2){
+            currentDate[0] = parseInt(currentDate[0])-3
+        }else{
+            currentDate[0] = parseInt(currentDate[0])+21
+        }
+        if(currentDate[0]<10){
+            currentDate[0] = "0" + currentDate[0].toString()
+        }
+        setShowTime(false)
         if (time) {
-            setTime(currentDate)
+            setTime(currentDate.join(":"))
         }
     };
 
@@ -52,36 +103,62 @@ const Form = ({navigation, route}) => {
         }
     }
 
+    const onSubmit = () => {
+        if (title != "") {
+            if(data){
+                triggerPut({
+                    id,
+                    title,
+                    description,
+                    date,
+                    time,
+                    image
+                })
+            }else{
+                const newId = parseInt((Math.random() * 1000000).toString().split('.')[0])
+                setId(newId)
+                triggerPost({
+                    id: newId,
+                    title,
+                    description,
+                    date,
+                    time,
+                    image
+                })
+            }
+        }
+    }
+
     return (
-        <View style={styles.container}>
-            <Header text={"Formulario"} navigation={navigation} route={route} />
+        <ScrollView style={styles.container}>
+            <Header text={"Formulario"} navigation={navigation} route={route} onSubmitForm={onSubmit} />
             <View style={styles.formContainer}>
-                <Text style={styles.label}>Titulo:</Text>
+                <Text style={styles.label}>{`${title}`/* Titulo: */}</Text>
                 <TextInput
                     style={styles.inputText}
                     value={title}
-                    onChange={setTitle}
+                    onChangeText={setTitle}
                     placeholder='Titulo'
                 />
-                <Text style={styles.label}>Fecha: {date.toString().slice(4, 15)}</Text>
+                <Text style={styles.label}>Fecha: {date}</Text>
                 <Button1 text={"Ingresar fecha"} action={() => setShowDate(true)} />
                 {
                     showDate && (
                         <DateTimePicker
                             mode='date'
-                            value={date}
-                            onChange={onChange}
+                            value={new Date()}
+                            onChange={onChangeDate}
                         />
                     )
                 }
-                <Text style={styles.label}>Hora: {time.toString().slice(16, 21)}</Text>
+                <Text style={styles.label}>Hora: {time}hs</Text>
                 <Button1 text={"Ingresar hora"} action={() => setShowTime(true)} />
                 {
                     showTime && (
                         <DateTimePicker
                             mode='time'
-                            value={time}
-                            onChange={onChange}
+                            value={new Date()}
+                            onChange={onChangeTime}
                         />
                     )
                 }
@@ -91,7 +168,7 @@ const Form = ({navigation, route}) => {
                     numberOfLines={3}
                     style={styles.inputText}
                     value={description}
-                    onChange={setDescription}
+                    onChangeText={setDescription}
                     placeholder='Descripción'
                 />
                 <Text style={styles.label}>Archivos:</Text>
@@ -102,7 +179,7 @@ const Form = ({navigation, route}) => {
                         <Image source={{ uri: image }} style={styles.image} />
                 }
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
@@ -110,15 +187,13 @@ export default Form
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: "center",
+        height: "100%",
         width: "100%",
-        marginBottom: 15,
         backgroundColor: colors.color4
     },
     formContainer: {
-        width: "85%",
-        marginTop: 20,
-        gap: 10
+        width: "100%",
+        paddingHorizontal: "10%",
     },
     label: {
         fontSize: 18,
@@ -140,6 +215,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: 200,
         height: 400,
-        resizeMode: 'contain' 
+        resizeMode: 'contain'
     }
 })

@@ -4,22 +4,14 @@ export const taskSlice = createSlice({
     name: "task",
     initialState: {
         tasks: [],
-        task: {
-            id: 0,
-            title: "",
-            date: "",
-            time: "",
-            description: "",
-            image: ""
-        }
+        task: null
     },
     reducers: {
-        updateTask: (state, newTask) => {
-            state.task = newTask
+        updateTask: (state, { payload }) => {
+            state.task = payload.task
         },
         updateTasksArray: (state, { payload }) => {
-            console.log(payload.newArray)
-            state.tasks = payload.newArray
+            state.tasks = Object.values(payload.newArray)
         }
     }
 })

@@ -20,9 +20,9 @@ const Navigator = () => {
         <NavigationContainer>
             {
                 user ?
-                    <ToDoStack />
-                    :
-                    <AuthStack />
+                <AuthStack />
+                :
+                <ToDoStack />
             }
         </NavigationContainer>
     )
